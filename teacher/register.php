@@ -47,7 +47,7 @@
                     Email alredy exists.
                   </div>";
                 }  ?>
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <input type="text" name="fname" placeholder="First name" class="form-control" required>
                 </div>
@@ -67,7 +67,7 @@
                     <input type="file" name="image" placeholder="" class="form-control">
                 </div>
                 <div class="mb-3">
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" name="batch">
                         <option selected>Choose batch</option>
                         <option value="computer science">computer science</option>
                         <option value="mechanical">mechanical</option>

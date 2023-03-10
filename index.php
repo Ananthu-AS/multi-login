@@ -3,7 +3,7 @@
 $divshow=false;
 if(isset($_POST['email'])&&isset($_POST['passcode'])){        
     $email=$_POST['email'];
-    $passcode=($_POST['passcode']);
+    $passcode=md5($_POST['passcode']);
     $sql='SELECT * FROM details WHERE email=:email';
     $statement=$connection->prepare($sql);
     $statement->execute([':email'=>$email]);
@@ -13,15 +13,17 @@ if(isset($_POST['email'])&&isset($_POST['passcode'])){
         $passcode_check=$user['passcode'];
         if($email==$email_check && $passcode==$passcode_check && $user['approve']==1){ 
             if($user['status']=='admin'){
+                echo $user['status'];
                 header('location:./admin/dashbord.php');
-                // $_SESSION['admin']=$email;
+                $_SESSION['email']=$email;
             }
             elseif($user['status']=='student' ){
                 header('location:./student/dashbord.php');
+                $_SESSION['email']=$email; 
             }
-            // $_SESSION['email']=$email;
             else{
-                header('location:./teacher/dashbord.php');  
+                header('location:./teacher/dashbord.php');
+                $_SESSION['email']=$email;  
             }                           
         } else{
             $divshow=true;
@@ -40,26 +42,27 @@ if(isset($_POST['email'])&&isset($_POST['passcode'])){
             <p class="text-center fs-1 fw-semibold mb-3">login</p>
             <div class="alert alert-danger" role="alert" style= display:<?php if ($divshow==false){echo "none";}else{echo "block";} ?>>
             incorrect email or password.
-        </div>
+            </div>
             <form action="" method="POST">
                 <div class="mb-3">
-                    <input type="email" name="email" placeholder="email" class="form-control">
+                    <input type="email" name="email" placeholder="email" class="form-control p-3">
                 </div>
                 <div class="mb-3">
-                    <input type="text" name="passcode" placeholder="password" class="form-control">
+                    <input type="text" name="passcode" placeholder="password" class="form-control p-3">
                 </div>
                 <div class="mb-3">
-                    <input type="submit" class="btn btn-primary p-2 form-control">
+                    <input type="submit" class="btn btn-primary p-3 form-control">
                 </div>
                 <div class="row p-0 m-0">
-                    <div class="col-sm-6 m-0">
+                    <div class="col-sm-6 m-0 p-0 pe-2">
                         <a href="./student/register.php" class="btn btn-primary p-2 form-control bg-success" target="_blank">Signup as Student</a>
                     </div>
-                    <div class="col-sm-6 m-0">
+                    <div class="col-sm-6 m-0 p-0 ps-2">
                         <a href="./teacher/register.php" class="btn btn-primary p-2 form-control bg-success" target="_blank">Signup as Teacher</a>
                     </div>
                 </div>
             </form>
+            <div class="text-end"><a href="passwordreset.php">forgot password</a></div>
         </div>
     </div>
 </div>

@@ -28,10 +28,6 @@
                     $_SESSION["page"]="registration.php";
                 }
                 else{
-                    // $_SESSION['admin']=$email;
-                    // $_SESSION['admin_name']=$fname.' '.$lname;
-                    // $_SESSION['admin_status']=$status;
-                    
                     $sql='INSERT INTO details (fname,lname,email,passcode,status,photo,batch) VALUES(:fname, :lname,:email, :passcode, :status, :image, :batch)';
                     $statement=$connection->prepare($sql);
                     $statement->execute([':fname'=>$fname, ':lname'=>$lname, ':passcode'=>$passcode, ':email'=>$email, ':image'=>$image, ':status'=>$status, ':batch'=>$batch ]);
@@ -45,20 +41,11 @@
                     $sql='INSERT INTO std_d (std_id,dob,m_id) VALUES(:std_id,:dob,:m_id)';
                     $statement=$connection->prepare($sql);
                     $statement->execute([':std_id'=>$std_id,':dob'=>$dob, ':m_id'=>$m_id ]);
-                    // $_SESSION["message"]="Data updated successfully.";
-                    // $_SESSION["session_code"]="success";
-                    // $_SESSION["page"]="../index.php";
                     $move_pic=move_uploaded_file($temp,$target);
                     
-                    // else{
-                    //     $sql='INSERT INTO ad_approve (fname,lname,email,status) VALUES(:fname, :lname,:email, :status,)';
-                    //     $statement=$connection->prepare($sql);
-                    //     $statement->execute([':fname'=>$fname, ':lname'=>$lname, ':email'=>$email, ':status'=>$status ]);
-                        
                     $_SESSION["message"]="Send for Admin approval";
                     $_SESSION["session_code"]="success";
-                    $_SESSION["page"]="../index.php";
-                    // }                   
+                    $_SESSION["page"]="../index.php";                 
                 } 
             }
 ?> 
